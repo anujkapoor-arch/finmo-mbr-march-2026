@@ -458,7 +458,7 @@ const liveMerchantDetails: Record<string, { kybDate: string; corridors: string; 
   "Cosmo Remit": { kybDate: "-", corridors: "NZD", products: "Money Movement", gca: "-", monthlyTrend: [], nextAction: "NZD activated Mar 24. No transactions yet. Remittance company based in Australia." },
   "IFTIN EXPRESS": { kybDate: "Nov 2025", corridors: "AUD, USDT", products: "Money Movement", gca: "EMQ", monthlyTrend: [{ month: "Nov", rev: 400 }, { month: "Dec", rev: 800 }, { month: "Jan", rev: 1200 }, { month: "Feb", rev: 1800 }, { month: "Mar", rev: 2359 }], nextAction: "Healthy growth. USDT + EMQ GCA added in March. Hypercare stage on Jira." },
   "Oceania Financial": { kybDate: "-", corridors: "AUD, USDT", products: "Money Movement", gca: "-", monthlyTrend: [], nextAction: "Legacy CS Handover (SP-94). USDT capability added Mar 10. No org_id or revenue data available." },
-  "Choisir Education": { kybDate: "Aug 2023", corridors: "SGD, AUD, Multi-currency", products: "Money Movement", gca: "DBS", monthlyTrend: [{ month: "Oct", rev: 10200 }, { month: "Nov", rev: 12400 }, { month: "Dec", rev: 15800 }, { month: "Jan", rev: 17200 }, { month: "Feb", rev: 18400 }, { month: "Mar", rev: 19016 }], nextAction: "Healthy growth trajectory. Discuss expansion to additional corridors." },
+  "Choisir Education": { kybDate: "Aug 2023", corridors: "SGD, AUD, Multi-currency", products: "Money Movement", gca: "DBS", monthlyTrend: [{ month: "Mar", rev: 18 }, { month: "Apr", rev: 40 }], nextAction: "Only $18 March revenue despite being live since Aug 2023. 8 total txns. Significantly underperforming vs $2K projected MRR. Needs urgent AE follow-up." },
   "DCS Cards": { kybDate: "Nov 2025", corridors: "MM, AR, AP, Bal, CF, Bank", products: "Full suite", gca: "DBS+WISE", monthlyTrend: [{ month: "Nov", rev: 80 }, { month: "Dec", rev: 120 }, { month: "Jan", rev: 95 }, { month: "Feb", rev: 190 }, { month: "Mar", rev: 309 }], nextAction: "Growing but very low vs $50K projected MRR. Investigate usage blockers with Gibson Saw." },
   "ZashX": { kybDate: "Dec 2025", corridors: "Money Movement", products: "MM", gca: "-", monthlyTrend: [{ month: "Dec", rev: 12 }, { month: "Jan", rev: 18 }, { month: "Feb", rev: 25 }, { month: "Mar", rev: 89 }], nextAction: "Revenue growing 3.5x month-over-month. Small base but promising trajectory." },
   "YALA CONSULT": { kybDate: "Dec 2025", corridors: "Money Movement", products: "MM", gca: "-", monthlyTrend: [{ month: "Feb", rev: 11 }, { month: "Mar", rev: 18 }], nextAction: "Minimal usage. Only 11 txns lifetime. Check if onboarding completed correctly." },
@@ -1419,7 +1419,7 @@ function SolutionsTab() {
 
   // Live data pulled from Metabase (revenue DB 14) + HubSpot + KYB (DB 5, table 98)
   const liveMerchants = [
-    { merchant: "Choisir Education", method: "Aug 2023", firstTxn: "Jan 2024", ae: "Justin Chia", kyb: "APPROVED", projectedMRR: "$2,000", actualMar26: "$19,016", totalRev: "$158,181", txns: 6735, status: "active" as const },
+    { merchant: "Choisir Education", method: "Aug 2023", firstTxn: "Mar 2026", ae: "Justin Chia", kyb: "APPROVED", projectedMRR: "$2,000", actualMar26: "$18", totalRev: "$59", txns: 8, status: "minimal" as const },
     { merchant: "DCS Cards", method: "-", firstTxn: "Nov 2025", ae: "Justin Chia", kyb: "APPROVED", projectedMRR: "$50,000", actualMar26: "$309", totalRev: "$621", txns: 1050, status: "low" as const },
     { merchant: "ZashX", method: "Dec 18", firstTxn: "Dec 2025", ae: "Michelle Ling", kyb: "APPROVED", projectedMRR: "$1,000", actualMar26: "$89", totalRev: "$144", txns: 67, status: "low" as const },
     { merchant: "MDJ", method: "Feb 3", firstTxn: "Feb 2026", ae: "Michelle Ling", kyb: "-", projectedMRR: "$8,000", actualMar26: "$528", totalRev: "$749", txns: 41, status: "active" as const },
@@ -1748,13 +1748,13 @@ function SolutionsTab() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-100 text-center">
             <p className="text-xs text-emerald-600 font-medium">Active (Revenue)</p>
-            <p className="text-2xl font-bold text-emerald-900">3</p>
-            <p className="text-xs text-emerald-500">Choisir, MDJ, IFTIN</p>
+            <p className="text-2xl font-bold text-emerald-900">2</p>
+            <p className="text-xs text-emerald-500">IFTIN, MDJ</p>
           </div>
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-100 text-center">
             <p className="text-xs text-amber-600 font-medium">Low / Minimal Activity</p>
-            <p className="text-2xl font-bold text-amber-900">6</p>
-            <p className="text-xs text-amber-500">DCS, ZashX, YALA, Pryvx, FNZ, VIVER</p>
+            <p className="text-2xl font-bold text-amber-900">7</p>
+            <p className="text-xs text-amber-500">Choisir, DCS, ZashX, YALA, Pryvx, FNZ, VIVER</p>
           </div>
           <div className="bg-red-50 rounded-lg p-4 border border-red-100 text-center">
             <p className="text-xs text-red-600 font-medium">Dormant ($0 Revenue)</p>
@@ -1763,8 +1763,8 @@ function SolutionsTab() {
           </div>
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 text-center">
             <p className="text-xs text-blue-600 font-medium">Mar 2026 Total Rev</p>
-            <p className="text-2xl font-bold text-blue-900">$21,910</p>
-            <p className="text-xs text-blue-500">Choisir $19K + IFTIN $2.4K + MDJ $528</p>
+            <p className="text-2xl font-bold text-blue-900">$2,912</p>
+            <p className="text-xs text-blue-500">IFTIN $2.4K + MDJ $528 + others</p>
           </div>
         </div>
 
@@ -1775,7 +1775,7 @@ function SolutionsTab() {
             <strong>10 of 19 merchants are dormant</strong> ($0 actual revenue). Klip Payments ($10K MRR), PRIME FX ($5K), Cosmo Remit, and Oceania Financial are priority re-engagement targets. FNZ Global and VIVER had first txns in March but $0 revenue — likely test transactions only.
           </Callout>
           <Callout type="warning">
-            <strong>Choisir + IFTIN generate 98% of revenue.</strong> $19,016 + $2,359 = $21,375 of $21,910 total. MDJ ($528) is the only other meaningful contributor. Extreme concentration risk across 19 activated merchants.
+            <strong>IFTIN + MDJ generate 99% of Live revenue.</strong> $2,359 + $528 = $2,887 of $2,912 total March revenue. Choisir ($18) is severely underperforming vs $2K projected MRR — only 8 txns lifetime. Extreme concentration risk.
           </Callout>
         </div>
       </Section>
