@@ -179,11 +179,17 @@ export function initAnalytics() {
       if (depth > maxScrollDepth) maxScrollDepth = depth
     }, { passive: true })
 
-    // Single exit event — visibilitychange is more reliable than beforeunload
+    // Heartbeat every 60s — ensures we capture data even if tab close kills exit event
+    setInterval(() => {
+      if (!sessionStarted || exitSent) return
+      send(buildPayload('session_end'))
+    }, 60_000)
+
+    // Exit events — try all available hooks
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'hidden') sendExit()
     })
-    // Fallback for hard close
     window.addEventListener('pagehide', sendExit)
+    window.addEventListener('beforeunload', sendExit)
   })
 }
