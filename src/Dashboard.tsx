@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   PieChart, Pie, Cell, ResponsiveContainer,
@@ -1918,9 +1919,16 @@ export default function MBRDashboard() {
       <div className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4">
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">Finmo - Monthly Business Review</h1>
-              <p className="text-sm text-gray-500">March 2026</p>
+            <div className="flex items-center gap-3">
+              <Link to="/" className="text-gray-400 hover:text-gray-600 transition-colors" title="Back to Dashboards">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </Link>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">Finmo - Monthly Business Review</h1>
+                <p className="text-sm text-gray-500">March 2026</p>
+              </div>
             </div>
             <div className="flex items-center gap-4">
               <span className="text-xs text-gray-400">Generated: April 9, 2026</span>

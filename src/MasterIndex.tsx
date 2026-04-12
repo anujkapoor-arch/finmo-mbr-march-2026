@@ -1,5 +1,6 @@
 // Master Index Page — Finmo Dashboards Hub
 // Template: categories with sub-dashboards listed as cards
+import { Link } from "react-router-dom"
 
 interface DashboardItem {
   name: string
@@ -104,35 +105,43 @@ export default function MasterIndex() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {cat.dashboards.map((d) => (
-                <a
-                  key={d.name}
-                  href={d.url || "#"}
-                  className={`block rounded-xl border p-5 transition-all ${
-                    d.status === "live"
-                      ? "bg-white border-gray-200 hover:border-blue-400 hover:shadow-md cursor-pointer"
-                      : "bg-gray-50 border-dashed border-gray-300 cursor-default"
-                  }`}
-                  onClick={(e) => { if (d.status !== "live") e.preventDefault() }}
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className={`font-semibold ${d.status === "live" ? "text-gray-900" : "text-gray-400"}`}>
-                      {d.name}
-                    </h3>
-                    {d.status === "live" ? (
-                      <span className="inline-block text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">LIVE</span>
-                    ) : d.status === "coming-soon" ? (
-                      <span className="inline-block text-[10px] font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">SOON</span>
-                    ) : (
-                      <span className="inline-block text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-600">ARCHIVED</span>
-                    )}
-                  </div>
-                  <p className={`text-sm mb-3 ${d.status === "live" ? "text-gray-600" : "text-gray-400"}`}>
-                    {d.description}
-                  </p>
-                  <p className="text-xs text-gray-400">{d.period}</p>
-                </a>
-              ))}
+              {cat.dashboards.map((d) => {
+                const isInternal = d.url?.startsWith("/")
+                const isExternal = d.url?.startsWith("http")
+                const cardClasses = `block rounded-xl border p-5 transition-all ${
+                  d.status === "live"
+                    ? "bg-white border-gray-200 hover:border-blue-400 hover:shadow-md cursor-pointer"
+                    : "bg-gray-50 border-dashed border-gray-300 cursor-default"
+                }`
+                const cardContent = (
+                  <>
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className={`font-semibold ${d.status === "live" ? "text-gray-900" : "text-gray-400"}`}>
+                        {d.name}
+                      </h3>
+                      {d.status === "live" ? (
+                        <span className="inline-block text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">LIVE</span>
+                      ) : d.status === "coming-soon" ? (
+                        <span className="inline-block text-[10px] font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">SOON</span>
+                      ) : (
+                        <span className="inline-block text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-600">ARCHIVED</span>
+                      )}
+                    </div>
+                    <p className={`text-sm mb-3 ${d.status === "live" ? "text-gray-600" : "text-gray-400"}`}>
+                      {d.description}
+                    </p>
+                    <p className="text-xs text-gray-400">{d.period}</p>
+                  </>
+                )
+
+                if (d.status === "live" && isInternal) {
+                  return <Link key={d.name} to={d.url!} className={cardClasses}>{cardContent}</Link>
+                }
+                if (d.status === "live" && isExternal) {
+                  return <a key={d.name} href={d.url} target="_blank" rel="noopener noreferrer" className={cardClasses}>{cardContent}</a>
+                }
+                return <div key={d.name} className={cardClasses}>{cardContent}</div>
+              })}
             </div>
           </div>
         ))}
