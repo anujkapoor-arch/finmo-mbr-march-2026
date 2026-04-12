@@ -1,4 +1,4 @@
-// Master Index Page — Finmo Dashboards Hub
+// Master Index Page — Finmo Pulse
 // Template: categories with sub-dashboards listed as cards
 import { Link } from "react-router-dom"
 
@@ -18,7 +18,7 @@ interface Category {
 
 const categories: Category[] = [
   {
-    name: "Monthly Business Review",
+    name: "Monthly Business Reviews",
     icon: "MBR",
     dashboards: [
       {
@@ -80,8 +80,8 @@ export default function MasterIndex() {
       {/* Header */}
       <div className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-5xl mx-auto px-6 py-6">
-          <h1 className="text-2xl font-bold text-gray-900">Finmo Dashboards</h1>
-          <p className="text-sm text-gray-500 mt-1">Internal analytics and reporting hub</p>
+          <h1 className="text-2xl font-bold text-gray-900">Finmo Pulse</h1>
+          <p className="text-sm text-gray-500 mt-1">Internal analytics and reporting</p>
         </div>
       </div>
 
