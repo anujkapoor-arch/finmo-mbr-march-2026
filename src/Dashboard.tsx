@@ -1905,6 +1905,7 @@ function SolutionsTab() {
 // MAIN DASHBOARD
 // ============================================================
 export default function MBRDashboard() {
+  const { logout } = useAuth();
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = ["Outbound Sales", "Inbound Leads", "Solutions"];
