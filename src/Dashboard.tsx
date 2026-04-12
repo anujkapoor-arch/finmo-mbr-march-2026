@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "./components/AuthGuard";
 import { Link } from "react-router-dom";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -1932,6 +1933,7 @@ export default function MBRDashboard() {
             </div>
             <div className="flex items-center gap-4">
               <span className="text-xs text-gray-400">Generated: April 9, 2026</span>
+              <button onClick={logout} className="px-3 py-1.5 text-xs font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg transition">Logout</button>
             </div>
           </div>
           {/* Tabs */}
