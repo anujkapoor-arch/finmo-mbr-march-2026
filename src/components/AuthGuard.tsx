@@ -37,15 +37,16 @@ export default function AuthGuard({ children }: { children: ReactNode }) {
         return;
       }
 
-      // Invalidate sessions created before guard epoch
+      // If session is valid but no login time recorded (e.g. OAuth redirect),
+      // set it now so the timeout tracking starts from this point
       const loginTime = localStorage.getItem(LOGIN_TIME_KEY);
       if (!loginTime || new Date(loginTime) < new Date(GUARD_EPOCH)) {
-        await logout();
-        return;
+        localStorage.setItem(LOGIN_TIME_KEY, new Date().toISOString());
       }
 
       // Check timeout
-      if (Date.now() - new Date(loginTime).getTime() > SESSION_TIMEOUT_MS) {
+      const currentLoginTime = localStorage.getItem(LOGIN_TIME_KEY)!;
+      if (Date.now() - new Date(currentLoginTime).getTime() > SESSION_TIMEOUT_MS) {
         await logout();
         return;
       }
