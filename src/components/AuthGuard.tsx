@@ -1,4 +1,4 @@
-import { useEffect, useState, createContext, useContext, useCallback, ReactNode } from "react";
+import { useEffect, useState, createContext, useContext, useCallback, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 const SESSION_TIMEOUT_MS = 30 * 60 * 1000;
