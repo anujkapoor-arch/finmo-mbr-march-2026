@@ -1,28 +1,29 @@
-// MBR Dashboard analytics — adapted from Atlar/Ikigai tracker
-// Additions: captures authenticated user email, tracks tab switches, section drill-downs
+// MBR Dashboard analytics — fires only after authentication
+// Sends exactly 2 webhooks per session: session_start + session_end
+// session_end includes all accumulated tracking data (tabs, rows, scroll, time)
+
+import { supabase } from '@/integrations/supabase/client'
 
 const WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/19580810/u7qqwud/'
 
-interface VisitorData {
-  event: string
+interface SessionData {
+  event: 'session_start' | 'session_end'
+  email: string
   visitorId: string
   visitNumber: number
-  firstSeenAt: string
   timestamp: string
   url: string
   referrer: string
-  userAgent: string
-  screenWidth: number
-  screenHeight: number
-  language: string
-  timezone: string
   ip?: string
   city?: string
   country?: string
   org?: string
-  email?: string
-  activeTab?: string
-  sectionsViewed: string[]
+  device: string
+  browser: string
+  screen: string
+  timezone: string
+  activeTab: string
+  tabsViewed: string[]
   expandedRows: string[]
   timeOnPageSeconds: number
   scrollDepthPercent: number
@@ -31,14 +32,16 @@ interface VisitorData {
 
 const COOKIE_NAME = '_vid'
 const COOKIE_VISITS = '_vcnt'
-const COOKIE_FIRST = '_vfirst'
 const COOKIE_DAYS = 365 * 2
 
 let startTime = Date.now()
-let sectionsViewed: Set<string> = new Set()
+let tabsViewed: Set<string> = new Set()
 let expandedRows: Set<string> = new Set()
 let maxScrollDepth = 0
 let currentTab = 'Outbound Sales'
+let sessionStarted = false
+let exitSent = false
+let userEmail = ''
 
 function setCookie(name: string, value: string, days: number) {
   const expires = new Date(Date.now() + days * 86400000).toUTCString()
@@ -50,29 +53,14 @@ function getCookie(name: string): string | null {
   return match ? decodeURIComponent(match[1]) : null
 }
 
-function generateId(): string {
-  return 'v_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 10)
-}
-
 function getOrCreateVisitorId(): string {
   let id = getCookie(COOKIE_NAME)
   if (!id) {
-    id = generateId()
+    id = 'v_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 10)
     setCookie(COOKIE_NAME, id, COOKIE_DAYS)
-    setCookie(COOKIE_FIRST, new Date().toISOString(), COOKIE_DAYS)
     setCookie(COOKIE_VISITS, '0', COOKIE_DAYS)
   }
   return id
-}
-
-function incrementVisitCount(): number {
-  const count = parseInt(getCookie(COOKIE_VISITS) || '0', 10) + 1
-  setCookie(COOKIE_VISITS, String(count), COOKIE_DAYS)
-  return count
-}
-
-function getFirstSeenAt(): string {
-  return getCookie(COOKIE_FIRST) || new Date().toISOString()
 }
 
 function getScrollDepth(): number {
@@ -81,127 +69,121 @@ function getScrollDepth(): number {
   return docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0
 }
 
-async function getIPInfo(): Promise<{ ip?: string; city?: string; country?: string; org?: string }> {
+function detectDevice(): string {
+  const ua = navigator.userAgent
+  if (/mobile|android|iphone/i.test(ua)) return 'Mobile'
+  if (/ipad|tablet/i.test(ua)) return 'Tablet'
+  return 'Desktop'
+}
+
+function detectBrowser(): string {
+  const ua = navigator.userAgent
+  if (ua.includes('Edg')) return 'Edge'
+  if (ua.includes('Chrome')) return 'Chrome'
+  if (ua.includes('Safari') && !ua.includes('Chrome')) return 'Safari'
+  if (ua.includes('Firefox')) return 'Firefox'
+  return 'Other'
+}
+
+let cachedIP: { ip?: string; city?: string; country?: string; org?: string } = {}
+
+async function fetchIPOnce() {
+  if (cachedIP.ip) return
   try {
     const resp = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) })
     if (resp.ok) {
       const data = await resp.json()
-      return { ip: data.ip, city: data.city, country: data.country_name, org: data.org }
+      cachedIP = { ip: data.ip, city: data.city, country: data.country_name, org: data.org }
     }
-  } catch {
-    // Silent fail
-  }
-  return {}
-}
-
-// Try to get email from Supabase session or localStorage
-function getUserEmail(): string | undefined {
-  try {
-    // Check Supabase auth storage
-    const keys = Object.keys(localStorage)
-    for (const key of keys) {
-      if (key.includes('supabase') && key.includes('auth')) {
-        const data = JSON.parse(localStorage.getItem(key) || '{}')
-        const email = data?.user?.email || data?.currentSession?.user?.email
-        if (email) return email
-      }
-    }
-    // Fallback: check for any stored email
-    const storedEmail = localStorage.getItem('mbr_user_email')
-    if (storedEmail) return storedEmail
-  } catch {
-    // Silent fail
-  }
-  return undefined
+  } catch { /* silent */ }
 }
 
 const visitorId = getOrCreateVisitorId()
-let visitNumber = 0
-let cachedIPInfo: { ip?: string; city?: string; country?: string; org?: string } = {}
 
-async function sendEvent(event: string) {
-  if (!WEBHOOK_URL) return
-
-  if (event === 'page_view') {
-    cachedIPInfo = await getIPInfo()
-  }
-
-  const data: VisitorData = {
+function buildPayload(event: 'session_start' | 'session_end'): SessionData {
+  return {
     event,
+    email: userEmail,
     visitorId,
-    visitNumber,
-    firstSeenAt: getFirstSeenAt(),
+    visitNumber: parseInt(getCookie(COOKIE_VISITS) || '1', 10),
     timestamp: new Date().toISOString(),
     url: window.location.href,
     referrer: document.referrer || 'direct',
-    userAgent: navigator.userAgent,
-    screenWidth: window.screen.width,
-    screenHeight: window.screen.height,
-    language: navigator.language,
+    ...cachedIP,
+    device: detectDevice(),
+    browser: detectBrowser(),
+    screen: `${window.screen.width}x${window.screen.height}`,
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    ...cachedIPInfo,
-    email: getUserEmail(),
     activeTab: currentTab,
-    sectionsViewed: Array.from(sectionsViewed),
+    tabsViewed: Array.from(tabsViewed),
     expandedRows: Array.from(expandedRows),
     timeOnPageSeconds: Math.round((Date.now() - startTime) / 1000),
     scrollDepthPercent: maxScrollDepth,
-    project: 'Finmo MBR - March 2026',
-  }
-
-  try {
-    navigator.sendBeacon(WEBHOOK_URL, JSON.stringify(data))
-  } catch {
-    fetch(WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-      keepalive: true,
-    }).catch(() => {})
+    project: 'Finmo Pulse - MBR March 2026',
   }
 }
 
-// Track tab switches
+function send(data: SessionData) {
+  try {
+    const json = JSON.stringify(data)
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(WEBHOOK_URL, json)
+    } else {
+      fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: json, keepalive: true }).catch(() => {})
+    }
+  } catch { /* silent */ }
+}
+
+function sendExit() {
+  if (!sessionStarted || exitSent) return
+  exitSent = true
+  send(buildPayload('session_end'))
+}
+
+// Called by Dashboard when tab changes
 export function trackTabSwitch(tabName: string) {
   currentTab = tabName
-  sectionsViewed.add(`tab:${tabName}`)
+  tabsViewed.add(tabName)
 }
 
-// Track expandable row clicks
+// Called by Dashboard when expandable row is clicked
 export function trackRowExpand(rowName: string) {
   expandedRows.add(rowName)
 }
 
+// Called once from main.tsx — waits for auth before starting
 export function initAnalytics() {
-  visitNumber = incrementVisitCount()
-  sendEvent('page_view')
+  // Listen for auth state — only start tracking after successful login
+  supabase.auth.onAuthStateChange(async (_event, session) => {
+    if (!session || sessionStarted) return
 
-  // Observe sections for viewport tracking
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.target.id) {
-          sectionsViewed.add(entry.target.id)
-        }
-      })
-    },
-    { threshold: 0.3 }
-  )
+    const email = session.user?.email || ''
+    if (!email.endsWith('@finmo.net')) return
 
-  setTimeout(() => {
-    document.querySelectorAll('section[id], [data-section]').forEach((el) => observer.observe(el))
-  }, 1000)
+    // Authenticated — start session
+    userEmail = email
+    sessionStarted = true
+    startTime = Date.now()
+    tabsViewed.add(currentTab)
 
-  // Track scroll depth
-  window.addEventListener('scroll', () => {
-    const depth = getScrollDepth()
-    if (depth > maxScrollDepth) maxScrollDepth = depth
-  }, { passive: true })
+    // Increment visit count
+    const count = parseInt(getCookie(COOKIE_VISITS) || '0', 10) + 1
+    setCookie(COOKIE_VISITS, String(count), COOKIE_DAYS)
 
-  // Send exit event
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') sendEvent('page_exit')
+    await fetchIPOnce()
+    send(buildPayload('session_start'))
+
+    // Track scroll
+    window.addEventListener('scroll', () => {
+      const depth = getScrollDepth()
+      if (depth > maxScrollDepth) maxScrollDepth = depth
+    }, { passive: true })
+
+    // Single exit event — visibilitychange is more reliable than beforeunload
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') sendExit()
+    })
+    // Fallback for hard close
+    window.addEventListener('pagehide', sendExit)
   })
-
-  window.addEventListener('beforeunload', () => sendEvent('page_exit'))
 }
