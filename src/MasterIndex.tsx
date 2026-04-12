@@ -53,18 +53,10 @@ const categories: Category[] = [
     icon: "CP",
     dashboards: [
       {
-        name: "Atlar APAC Blueprint",
-        description: "APAC expansion strategy for Atlar",
-        period: "Q1 2026",
-        status: "live",
-        url: "https://atlar-apac-blueprint.lovable.app",
-      },
-      {
-        name: "Ikigai GTM Blueprint",
-        description: "Go-to-market strategy for Ikigai",
-        period: "Q1 2026",
-        status: "live",
-        url: "https://ikigai-gtm-blueprint.lovable.app",
+        name: "Client Dashboard",
+        description: "Coming soon",
+        period: "Q2 2026",
+        status: "coming-soon",
       },
     ],
   },
