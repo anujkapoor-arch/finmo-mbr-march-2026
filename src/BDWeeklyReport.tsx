@@ -213,8 +213,8 @@ function OutboundTab() {
 
   // -- SDR data (Harini + Sukriti only, updated - 98.7% attribution)
   const sdrData = [
-    { sdr: "Harini", dials: 274, answered: 89, rate: "32.5%", conv: 27, convRate: "9.9%", gt2min: 6 },
-    { sdr: "Sukriti", dials: 313, answered: 101, rate: "32.3%", conv: 28, convRate: "8.9%", gt2min: 6 },
+    { sdr: "Harini", dials: 274, answered: 101, rate: "36.9%", conv: 35, convRate: "12.8%", gt2min: 8 },
+    { sdr: "Sukriti", dials: 313, answered: 94, rate: "30.0%", conv: 22, convRate: "7.0%", gt2min: 4 },
   ];
 
   // -- SDR x Region (expandable, updated)
@@ -263,26 +263,24 @@ function OutboundTab() {
     { name: "Debbie Y.", co: "Moonrise Studio", sdr: "Harini", date: "Mar 17", reply: "no. not available", type: "Not Interested", variant: "danger" as const },
   ];
 
-  // -- Top conversations (from updated outreach report with HubSpot links and outcomes)
+  // -- Top conversations (updated with new SDR attributions)
   const topConversations = [
-    { rank: 1, duration: "7m35s", sdr: "Harini", region: "AU", date: "Apr 13", hsId: "469029666533", company: "Travel Action Pty Ltd", snippet: "Meeting booked with AE - logistics/payments AU to HK/China, $50K-$400K AUD/month" },
-    { rank: 2, duration: "4m59s", sdr: "Sukriti", region: "AU", date: "Apr 13", hsId: "467863184091", company: "Khaybar Services", snippet: "Existing customer - support issue (refund not received, $9,998.71 AUD)" },
-    { rank: 3, duration: "4m07s", sdr: "Harini", region: "Other", date: "Apr 14", hsId: "470800623344", company: "Novara Partners", snippet: "Meeting booked - law firm/M&A advisory, multi-currency collection UK/US" },
-    { rank: 4, duration: "3m12s", sdr: "Harini", region: "SG", date: "Apr 8", hsId: "121340124327", company: "Pollyanna Consulting", snippet: "Warm - traveling until end of month, asked for email" },
-    { rank: 5, duration: "2m57s", sdr: "Sukriti", region: "SG", date: "Apr 14", hsId: "456973459146", company: "Mobbin", snippet: "Rejection - 'not interested', asked 'how did you get my number?'" },
-    { rank: 6, duration: "2m54s", sdr: "Harini", region: "AU", date: "Apr 14", hsId: "469029666533", company: "Travel Action Pty Ltd", snippet: "Follow-up - rescheduled meeting to Thursday 4:30pm AU time" },
-    { rank: 7, duration: "2m42s", sdr: "Harini", region: "SG", date: "Apr 10", hsId: "457029412571", company: "Gimmefy", snippet: "Meeting booked - Wednesday 1pm SGT" },
-    { rank: 8, duration: "2m39s", sdr: "Sukriti", region: "AU", date: "Apr 8", hsId: "467863184091", company: "Khaybar Services", snippet: "Inbound signup follow-up - travel agency + money exchange" },
-    { rank: 9, duration: "2m22s", sdr: "Harini", region: "SG", date: "Apr 13", hsId: "457014168306", company: "Futurx Creatives", snippet: "Warm - busy on shoot, asked for email" },
-    { rank: 10, duration: "2m17s", sdr: "Harini", region: "MY", date: "Apr 2", hsId: "456973453000", company: "Ematic Solutions", snippet: "Warm - asked to email, will discuss with senior" },
+    { rank: 1, duration: "7m35s", sdr: "Harini", region: "AU", date: "Apr 13", phone: "+61450501119", platform: "Twilio", snippet: "Mohamed - signed up on website, extended conversation about Finmo" },
+    { rank: 2, duration: "4m59s", sdr: "Sukriti", region: "AU", date: "Apr 13", phone: "+61422440440", platform: "Twilio", snippet: "Noor - follow-up call, prospect remembered Sukriti" },
+    { rank: 3, duration: "4m07s", sdr: "Harini", region: "Other", date: "Apr 14", phone: "+819010502443", platform: "Exotel", snippet: "Takashi from Novara - discussed Finmo, interested in follow-up" },
+    { rank: 4, duration: "3m12s", sdr: "Harini", region: "SG", date: "Apr 8", phone: "+6596930904", platform: "Exotel", snippet: "Lynette - about to start meeting, asked to be quick" },
+    { rank: 5, duration: "2m57s", sdr: "Sukriti", region: "SG", date: "Apr 14", phone: "+6584841515", platform: "Exotel", snippet: "Extended dialogue, prospect engaged but confused on company name" },
+    { rank: 6, duration: "2m54s", sdr: "Harini", region: "AU", date: "Apr 14", phone: "+61450501119", platform: "Twilio", snippet: "Mohamed follow-up - mentioned AE Phil Ross for next steps" },
+    { rank: 7, duration: "2m42s", sdr: "Harini", region: "SG", date: "Apr 10", phone: "+6590376326", platform: "Exotel", snippet: "Mahima - focus group pitch, prospect engaged" },
+    { rank: 8, duration: "2m39s", sdr: "Sukriti", region: "AU", date: "Apr 8", phone: "+61422440440", platform: "Twilio", snippet: "Noor - signed up on platform, Sukriti explained Finmo" },
+    { rank: 9, duration: "2m24s", sdr: "Harini", region: "MY", date: "Apr 10", phone: "+601111107212", platform: "Exotel", snippet: "Vanitha - signed up on website, discussed requirements" },
+    { rank: 10, duration: "2m22s", sdr: "Harini", region: "SG", date: "Apr 13", phone: "+6596381291", platform: "Exotel", snippet: "Tengy Lee - busy, shopping, asked callback" },
   ];
 
   // -- Meetings booked from outbound
   const outboundMeetings = [
-    { name: "Mohamed Addouj", co: "Travel Action Pty Ltd", sdr: "Harini", type: "Meeting with AE", date: "Apr 13", hsId: "469029666533", note: "Logistics/payments AU to HK/China, $50K-$400K AUD/month. Meeting rescheduled to Thu 4:30pm AU." },
-    { name: "Takashi Toyokawa", co: "Novara Partners", sdr: "Harini", type: "Meeting Booked", date: "Apr 14", hsId: "470800623344", note: "Law firm/M&A advisory, multi-currency collection UK/US." },
-    { name: "Mahima P.", co: "Gimmefy", sdr: "Harini", type: "Meeting Booked", date: "Apr 10", hsId: "457029412571", note: "Meeting booked for Wednesday 1pm SGT." },
-    { name: "Debbie Yong", co: "Atypical Media", sdr: "Harini", type: "Focus Group Research Call", date: "Apr 13", hsId: "457027914450", note: "Executive branding & thought leadership studio, SG." },
+    { name: "Debbie Yong", co: "Atypical Media", sdr: "Harini", type: "Focus Group Research Call", date: "Apr 13", hsId: "457027914450", note: "Executive branding & thought leadership studio, SG. Signed up Mar 16, 5 calls before meeting." },
+    { name: "Thomas Budin", co: "We Are Noodle", sdr: "Harini", type: "Focus Group Research Session", date: "Apr 14", hsId: "456973471476", note: "B2B marketing agency, SG, 9 employees. Re-engagement from prior outreach - research framing resonated." },
   ];
 
   return (
@@ -293,11 +291,11 @@ function OutboundTab() {
         <MetricCard label="Emails Sent" value="856" sub="379 prospects, ~2.3 per prospect" color="blue" />
         <MetricCard label="LinkedIn Actions" value="910" sub="75 prospects, 17% connection rate" color="purple" />
         <MetricCard label="Total Calls" value="587" sub="Harini: 274, Sukriti: 313" color="green" />
-        <MetricCard label="Meetings Booked" value="4" sub="Travel Action, Novara, Gimmefy, Atypical Media" color="amber" />
+        <MetricCard label="Meetings Booked" value="2" sub="Atypical Media, We Are Noodle" color="amber" />
       </div>
 
       {/* Outbound Meetings */}
-      <Section title="Meetings Booked from Outbound" subtitle="4 meetings booked in the period - cold calls converting to AE meetings">
+      <Section title="Meetings Booked from Outbound" subtitle="2 meetings booked in the period - both via focus group research framing">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -501,13 +499,13 @@ function OutboundTab() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
           <div className="bg-emerald-50 rounded-lg p-3 border border-emerald-100 text-center">
             <p className="text-xs text-emerald-600 font-medium">Customer Answered</p>
-            <p className="text-xl font-bold text-emerald-900">190</p>
-            <p className="text-xs text-emerald-500">32.4%</p>
+            <p className="text-xl font-bold text-emerald-900">195</p>
+            <p className="text-xs text-emerald-500">33.2%</p>
           </div>
           <div className="bg-blue-50 rounded-lg p-3 border border-blue-100 text-center">
             <p className="text-xs text-blue-600 font-medium">Conv {">"}30s</p>
-            <p className="text-xl font-bold text-blue-900">55</p>
-            <p className="text-xs text-blue-500">9.4%</p>
+            <p className="text-xl font-bold text-blue-900">57</p>
+            <p className="text-xs text-blue-500">9.7%</p>
           </div>
           <div className="bg-amber-50 rounded-lg p-3 border border-amber-100 text-center">
             <p className="text-xs text-amber-600 font-medium">Conv {">"}2min</p>
@@ -529,7 +527,7 @@ function OutboundTab() {
         {/* What happened on connected calls */}
         <div className="mb-6">
           <h4 className="font-semibold text-gray-800 text-sm mb-3">What Happened on Connected Calls (197 answered, 181 transcribed)</h4>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
             <div onClick={() => toggle("interested-list")} className="bg-emerald-50 rounded-lg p-3 border border-emerald-100 text-center cursor-pointer hover:shadow-md transition-shadow">
               <p className="text-xs text-emerald-600 font-medium">Interested</p>
               <p className="text-xl font-bold text-emerald-900">12</p>
@@ -547,14 +545,9 @@ function OutboundTab() {
               <p className="text-xl font-bold text-gray-700">68</p>
               <p className="text-xs text-gray-500">34.5% of answered</p>
             </div>
-            <div className="bg-red-50 rounded-lg p-3 border border-red-100 text-center">
-              <p className="text-xs text-red-600 font-medium">Rejection</p>
-              <p className="text-xl font-bold text-red-900">14</p>
-              <p className="text-xs text-red-500">7.1% of answered</p>
-            </div>
             <div onClick={() => toggle("callback-list")} className="bg-amber-50 rounded-lg p-3 border border-amber-100 text-center cursor-pointer hover:shadow-md transition-shadow">
               <p className="text-xs text-amber-600 font-medium">Callback Request</p>
-              <p className="text-xl font-bold text-amber-900">7</p>
+              <p className="text-xl font-bold text-amber-900">8</p>
               <p className="text-xs text-amber-500">Follow-up needed</p>
               <p className="text-[10px] text-gray-400 mt-1">Click to expand</p>
             </div>
@@ -972,17 +965,18 @@ function OutboundTab() {
       </Section>
 
       {/* Top Conversations */}
-      <Section title="Top 10 Conversations (Harini + Sukriti)" subtitle="Longest calls by duration. Click any row for details.">
+      <Section title="Top 10 Conversations (Harini + Sukriti)" subtitle="Longest calls by duration. Click any row for snippet.">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b-2 border-gray-200 bg-gray-50">
                 <th className="w-6 py-2 px-2"></th>
-                <th className="text-left py-2 px-3 font-semibold text-gray-600">Company</th>
-                <th className="text-left py-2 px-3 font-semibold text-gray-600">SDR</th>
+                <th className="text-center py-2 px-2 font-semibold text-gray-600">#</th>
                 <th className="text-left py-2 px-3 font-semibold text-gray-600">Duration</th>
+                <th className="text-left py-2 px-3 font-semibold text-gray-600">SDR</th>
                 <th className="text-left py-2 px-3 font-semibold text-gray-600">Region</th>
                 <th className="text-left py-2 px-3 font-semibold text-gray-600">Date</th>
+                <th className="text-left py-2 px-3 font-semibold text-gray-600">Platform</th>
               </tr>
             </thead>
             <tbody>
@@ -990,19 +984,22 @@ function OutboundTab() {
                 <>
                   <tr key={c.rank} onClick={() => toggle(`conv-${c.rank}`)} className="border-b border-gray-50 hover:bg-blue-50/40 cursor-pointer">
                     <td className="py-2 px-2"><Chevron open={isOpen(`conv-${c.rank}`)} /></td>
-                    <td className="py-2 px-3 font-medium">
-                      <a href={`${HS}/0-1/${c.hsId}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-blue-700 hover:underline">
-                        {c.company} <span className="text-[10px] text-blue-400">&#8599;</span>
-                      </a>
-                    </td>
-                    <td className="py-2 px-3 text-xs">{c.sdr}</td>
+                    <td className="text-center py-2 px-2 font-bold text-gray-400">{c.rank}</td>
                     <td className="py-2 px-3 font-bold text-blue-700">{c.duration}</td>
+                    <td className="py-2 px-3">{c.sdr}</td>
                     <td className="py-2 px-3"><Badge text={c.region} variant={c.region === "AU" ? "success" : "default"} /></td>
                     <td className="py-2 px-3 text-xs text-gray-500">{c.date}</td>
+                    <td className="py-2 px-3 text-xs">{c.platform}</td>
                   </tr>
                   {isOpen(`conv-${c.rank}`) && (
                     <DetailPanel key={`conv-${c.rank}-detail`}>
-                      <p className="text-sm text-gray-700">{c.snippet}</p>
+                      <DetailGrid items={[
+                        { label: "Phone", value: c.phone },
+                        { label: "SDR", value: c.sdr },
+                        { label: "Region", value: c.region },
+                        { label: "Platform", value: c.platform },
+                      ]} />
+                      <p className="mt-2 text-sm text-gray-700 italic">{c.snippet}</p>
                     </DetailPanel>
                   )}
                 </>
