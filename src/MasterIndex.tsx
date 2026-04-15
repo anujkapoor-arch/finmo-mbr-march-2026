@@ -37,6 +37,19 @@ const categories: Category[] = [
     ],
   },
   {
+    name: "BD Weekly Reports",
+    icon: "BD",
+    dashboards: [
+      {
+        name: "April 1-15, 2026",
+        description: "Outbound (email, LinkedIn, calls), Inbound (signups, pipeline, meetings) - weekly BD performance",
+        period: "Apr 1-15, 2026",
+        status: "live",
+        url: "/bd-weekly-apr-1-15",
+      },
+    ],
+  },
+  {
     name: "Sales & Pipeline",
     icon: "SP",
     dashboards: [
