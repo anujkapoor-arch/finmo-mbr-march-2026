@@ -41,6 +41,13 @@ const categories: Category[] = [
     icon: "BD",
     dashboards: [
       {
+        name: "April 16-22, 2026",
+        description: "Outbound (email, LinkedIn, calls), Inbound (signups, pipeline, meetings) - weekly BD performance. 91 calls transcribed and classified.",
+        period: "Apr 16-22, 2026",
+        status: "live",
+        url: "/bd-weekly-apr-16-22",
+      },
+      {
         name: "April 1-15, 2026",
         description: "Outbound (email, LinkedIn, calls), Inbound (signups, pipeline, meetings) - weekly BD performance",
         period: "Apr 1-15, 2026",
@@ -66,10 +73,18 @@ const categories: Category[] = [
     icon: "CP",
     dashboards: [
       {
-        name: "Client Dashboard",
-        description: "Coming soon",
-        period: "Q2 2026",
-        status: "coming-soon",
+        name: "DLSP (De La Salle Philippines)",
+        description: "16-school network overview - TOM sprint + 5-school POC play. Prepared for Jeng Pascual (CFO) and Catherine Santiago.",
+        period: "2026 engagement",
+        status: "live",
+        url: "https://dlsp-dashboard.vercel.app",
+      },
+      {
+        name: "EastWest Banking Corporation",
+        description: "Meeting prep for Rafael Algarra Jr. (SEVP Financial Markets). Finmo as tech-layer on EastWest treasury + EasyBiz.",
+        period: "Apr 2026 meeting",
+        status: "live",
+        url: "https://eastwest-dashboard.vercel.app",
       },
     ],
   },
