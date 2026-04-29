@@ -1819,6 +1819,69 @@ function InboundTab() {
         </div>
       </Section>
 
+      {/* Strategic Conclusion - SME Marketing Agencies */}
+      <Section title="Strategic Conclusion: Concluding Outbound to SME Marketing Agencies" subtitle="Cumulative outbound volume across Feb-Apr targeted at SME marketing agencies + adjacent small agencies has not produced ICP-fit conversion. Performance Marketing ads to the same ICP tell the same story. Time to pivot.">
+        {/* Cumulative volume - the proof */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-5">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 text-center">
+            <p className="text-xs text-blue-600 font-medium uppercase tracking-wide">Total calls</p>
+            <p className="text-3xl font-bold text-blue-900 mt-1">2,000+</p>
+            <p className="text-[11px] text-blue-500 mt-1">Feb-Apr cumulative (Twilio + Exotel)</p>
+          </div>
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 text-center">
+            <p className="text-xs text-blue-600 font-medium uppercase tracking-wide">Total emails</p>
+            <p className="text-3xl font-bold text-blue-900 mt-1">4,000+</p>
+            <p className="text-[11px] text-blue-500 mt-1">SmartReach + follow-ups across periods</p>
+          </div>
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 text-center">
+            <p className="text-xs text-blue-600 font-medium uppercase tracking-wide">Total LinkedIn actions</p>
+            <p className="text-3xl font-bold text-blue-900 mt-1">5,000+</p>
+            <p className="text-[11px] text-blue-500 mt-1">Profile visits + connection requests + messages</p>
+          </div>
+        </div>
+
+        {/* The conclusion */}
+        <Callout type="danger">
+          <p className="font-bold mb-2 text-base">SMEs are not resonating with the cash-lite tools positioning.</p>
+          <p className="text-sm">They don&apos;t have a reconciliation or cash-forecasting issue. They&apos;re happily running their own finances or using a part-time bookkeeper. <strong>Aspire / Airwallex is working fine for them.</strong> The "sell cash tools, upsell payments" motion is not converting - and not just for marketing agencies. Same pattern holds for any small agency.</p>
+        </Callout>
+
+        {/* Cross-functional consistency */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5 mb-5">
+          <div className="bg-white rounded-lg border border-gray-200 p-4">
+            <h4 className="text-sm font-bold text-gray-800 mb-2">BD Outbound (BD weekly reports, Feb-Apr)</h4>
+            <ul className="text-xs text-gray-700 space-y-1.5">
+              <li><strong>Apr 1-15:</strong> 754 prospects, 1,368 touchpoints, 601 calls, 58 conv {">"}30s, <strong>3 email replies (all negative)</strong>, 0% positive sentiment.</li>
+              <li><strong>Apr 16-22:</strong> 378 prospects, 638 touchpoints, 233 calls, 28 conv {">"}30s, <strong>1 positive email reply (DataPull, exploratory call)</strong> + 2 negative.</li>
+              <li><strong>Apr 23-29:</strong> 566 prospects, 1,028 touchpoints, 363 calls, 52 conv {">"}30s, <strong>0 positive replies</strong>, 7 verbatim "no time / no pain / pitch-back" quotes.</li>
+              <li><strong>Cumulative:</strong> ~2,259 calls + ~4,000 emails + ~5,000 LinkedIn touches.</li>
+            </ul>
+          </div>
+          <div className="bg-white rounded-lg border border-gray-200 p-4">
+            <h4 className="text-sm font-bold text-gray-800 mb-2">AI SDR Pilot (Mar 2026) - same conclusion</h4>
+            <ul className="text-xs text-gray-700 space-y-1.5">
+              <li>104 unique leads dialed, <strong>76 connected (73% pickup)</strong>, <strong>0 sessions booked</strong>.</li>
+              <li>Verdict from the report: <em>"The pain is real but we&apos;re reaching the wrong people."</em></li>
+              <li>Signals against the ICP: wrong persona (marketing / creative, not finance), no pain resonance, already solved (Xero / QBO), too small for pain (&lt;20-person agencies), role mismatch.</li>
+              <li>Recommendation in March: shift to companies with 100+ employees, dedicated finance, multi-currency operations.</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* The pivot */}
+        <div className="rounded-xl border-2 border-emerald-300 bg-gradient-to-br from-emerald-50 to-white p-5 mb-3">
+          <h4 className="text-base font-bold text-emerald-900 mb-2">The Pivot</h4>
+          <ul className="text-sm text-gray-700 space-y-2">
+            <li><strong>Stop targeting SME small agencies for cash-tools-as-wedge.</strong> The motion is not converting and won&apos;t convert with more volume. Two independent functions (BD + Performance Marketing ads) reached the same conclusion against the same ICP.</li>
+            <li><strong>For Treasury OS (TOS), target mid-market.</strong> That&apos;s where the meetings landed in 2025 (Feb-Mar 2026 best longest calls were in mid-market: Travel Action, Novara Partners, Atypical Media). 100+ employees, dedicated finance, multi-currency.</li>
+            <li><strong>No vanilla TOS for "all industries".</strong> Pick an industry we deeply understand (e.g., <strong>travel</strong>) and build a custom product for that vertical. Generic positioning loses to incumbent fit.</li>
+            <li><strong>Re-cut the next outbound batch.</strong> Lead Gen 3.0 (Apr 26 launch) already aligns - 76% MedTech + BPO, 60% in 100-999 employees. Hold this thesis: validate it with the next 6-8 weeks of conversion data, retire small-agency cohorts.</li>
+          </ul>
+        </div>
+
+        <p className="text-xs text-gray-500 italic">Source data: <code>APRIL_2_15_CALL_ANALYSIS.md</code>, <code>APRIL_OUTREACH_REPORT.md</code>, <code>INBOUND_LEADS_APRIL_1_15_2026_ANALYSIS.md</code>, <code>CALL_ANALYSIS_REPORT.md</code> (Feb-Mar), <code>AI_SDR_PILOT_FINAL_REPORT.md</code>.</p>
+      </Section>
+
       {/* Key Observations */}
       <Section title="Key Observations">
         <div className="space-y-3">
