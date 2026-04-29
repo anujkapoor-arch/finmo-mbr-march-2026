@@ -3,6 +3,7 @@ import MasterIndex from "./MasterIndex";
 import MBRDashboard from "./Dashboard";
 import BDWeeklyReport from "./BDWeeklyReport";
 import BDWeeklyApr16_22 from "./BDWeeklyApr16_22";
+import BDWeeklyApr23_29 from "./BDWeeklyApr23_29";
 import AuthGuard from "./components/AuthGuard";
 import Login from "./pages/Login";
 
@@ -40,6 +41,14 @@ function App() {
           element={
             <AuthGuard>
               <BDWeeklyApr16_22 />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/bd-weekly-apr-23-29"
+          element={
+            <AuthGuard>
+              <BDWeeklyApr23_29 />
             </AuthGuard>
           }
         />

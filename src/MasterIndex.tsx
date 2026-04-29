@@ -41,6 +41,13 @@ const categories: Category[] = [
     icon: "BD",
     dashboards: [
       {
+        name: "April 23-29, 2026",
+        description: "Lead Gen 3.0 launched (101 prospects, 6 campaigns - 4 AE + 2 SDR). 7 inbound meetings, 363 calls, 131 transcribed. Multi-persona outreach now live.",
+        period: "Apr 23-29, 2026",
+        status: "live",
+        url: "/bd-weekly-apr-23-29",
+      },
+      {
         name: "April 16-22, 2026",
         description: "Outbound (email, LinkedIn, calls), Inbound (signups, pipeline, meetings) - weekly BD performance. 91 calls transcribed and classified.",
         period: "Apr 16-22, 2026",
