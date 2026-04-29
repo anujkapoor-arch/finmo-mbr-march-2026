@@ -242,43 +242,29 @@ function OutboundTab() {
     { obj: "Wrong number / wrong person", count: 2, by: "Harini: 2" },
   ];
 
-  // Reply analysis - SmartReach reply detail not yet pulled for Apr 23-29
-  // Estimated 4 replies (1% of 398 emailed). LinkedIn reply rate 0% per dashboard.
-  const replies: { hsId: string; company: string; contact: string; reply: string; type: string; variant: "success" | "danger" | "warning" | "default" | "purple"; note: string }[] = [];
-
   // Top conversations (from calls.json top_calls + transcript classification - Apr 23-29)
+  // Excludes calls with no HubSpot match (the 2 unknown long calls have been moved to a "follow-up needed" note below).
   const topConversations = [
     { rank: 1, duration: "7m26s", sdr: "Harini", region: "MY", date: "Apr 27", co: "MDHR Legacy", contact: "Muhammad Danial Haikal Rosazri", platform: "Exotel", outcome: "Interested - inbound", snippet: "Saw your sign up on website. Dairy / lower-cholesterol milk products. Already cross-border to ID/TH/KH, expanding to India. Asked about pricing. AE call set up with Adlin." },
-    { rank: 2, duration: "3m17s", sdr: "Harini", region: "Other", date: "Apr 27", co: "(unknown)", contact: "-", platform: "Exotel", outcome: "Substantive", snippet: "Long-form conversation. No HubSpot match - investigate." },
-    { rank: 3, duration: "2m55s", sdr: "Harini", region: "AU", date: "Apr 23", co: "ELRC Trading Pty Ltd", contact: "Eric Chen", platform: "Twilio", outcome: "Identity question - inbound", snippet: "AU remittance + crypto on/off-ramp. ~$15M AUD/mo, 100-150 transactions. Eric initially asked who was calling, then engaged. KYB next." },
-    { rank: 4, duration: "2m05s", sdr: "Harini", region: "SG", date: "Apr 23", co: "Colorfull Store", contact: "Sophia Ho", platform: "Exotel", outcome: "Busy / callback", snippet: "Sophia asked Harini to call back an hour later, then took the second call - 2m05s on the callback." },
-    { rank: 5, duration: "1m53s", sdr: "Sukriti", region: "AU", date: "Apr 27", co: "Create 3D Printing Solutions", contact: "Caleb Hilder", platform: "Twilio", outcome: "Rejection", snippet: "Caleb signed up but then declined politely on the call." },
-    { rank: 6, duration: "1m49s", sdr: "Harini", region: "AU", date: "Apr 23", co: "Australian Gold Capital Pty Ltd", contact: "Michael Kukulka", platform: "Twilio", outcome: "Interested - inbound", snippet: "Precious metals bullion (gold/silver/platinum/palladium). 2.5-3.5k bank txns/mo. Wants payments platform with API + Reckon integration. Mostly AUD; 1 SG partner. AE call done, KYB + demo next." },
-    { rank: 7, duration: "1m40s", sdr: "Harini", region: "SG", date: "Apr 24", co: "PRCA Global", contact: "Ed Burleigh", platform: "Exotel", outcome: "Substantive", snippet: "Engaged conversation about Finmo." },
-    { rank: 8, duration: "1m33s", sdr: "Harini", region: "SG", date: "Apr 23", co: "Iab Sea+India", contact: "Miranda Dimopoulos", platform: "Exotel", outcome: "Identity question", snippet: "Miranda asked where Harini was calling from before engaging." },
-    { rank: 9, duration: "1m31s", sdr: "Harini", region: "SG", date: "Apr 23", co: "(unknown)", contact: "-", platform: "Exotel", outcome: "Substantive", snippet: "No HubSpot match - investigate." },
-    { rank: 10, duration: "1m21s", sdr: "Harini", region: "SG", date: "Apr 27", co: "The DFRNT Agency", contact: "Sharlyn Seet", platform: "Exotel", outcome: "Substantive", snippet: "Sharlene engaged for ~80s on the Finmo pitch." },
-    { rank: 11, duration: "1m21s", sdr: "Harini", region: "SG", date: "Apr 29", co: "Olief", contact: "Tinaga Angkasa", platform: "Exotel", outcome: "Rejection", snippet: "Tinaga declined politely." },
-    { rank: 12, duration: "1m20s", sdr: "Harini", region: "SG", date: "Apr 29", co: "MyagenC", contact: "Norah Zhang", platform: "Exotel", outcome: "Substantive", snippet: "Nora engaged in extended dialogue." },
-    { rank: 13, duration: "1m18s", sdr: "Harini", region: "Other", date: "Apr 24", co: "Cyphalet Inc", contact: "Sunday Olanite", platform: "Exotel", outcome: "Follow-up - prior period inbound", snippet: "Follow-up from last week's PSP meeting. Sunday is the Cyphalet contact - $5-10M/mo USD payouts to CN / IN / US." },
-    { rank: 14, duration: "1m17s", sdr: "Harini", region: "SG", date: "Apr 29", co: "NEIV", contact: "Sidharth Bhadani", platform: "Exotel", outcome: "Substantive", snippet: "Siddharth engaged for the pitch." },
-    { rank: 15, duration: "1m16s", sdr: "Harini", region: "SG", date: "Apr 29", co: "Creo Farm", contact: "Kang Shiqiang", platform: "Exotel", outcome: "Interested", snippet: "Kang signed up on website. Engaged in conversation." },
+    { rank: 2, duration: "2m55s", sdr: "Harini", region: "AU", date: "Apr 23", co: "ELRC Trading Pty Ltd", contact: "Eric Chen", platform: "Twilio", outcome: "Identity question - inbound", snippet: "AU remittance + crypto on/off-ramp. ~$15M AUD/mo, 100-150 transactions. Eric initially asked who was calling, then engaged. KYB next." },
+    { rank: 3, duration: "2m05s", sdr: "Harini", region: "SG", date: "Apr 23", co: "Colorfull Store", contact: "Sophia Ho", platform: "Exotel", outcome: "Busy / callback", snippet: "Sophia asked Harini to call back an hour later, then took the second call - 2m05s on the callback." },
+    { rank: 4, duration: "1m53s", sdr: "Sukriti", region: "AU", date: "Apr 27", co: "Create 3D Printing Solutions", contact: "Caleb Hilder", platform: "Twilio", outcome: "Rejection", snippet: "Caleb signed up but then declined politely on the call." },
+    { rank: 5, duration: "1m49s", sdr: "Harini", region: "AU", date: "Apr 23", co: "Australian Gold Capital Pty Ltd", contact: "Michael Kukulka", platform: "Twilio", outcome: "Interested - inbound", snippet: "Precious metals bullion (gold/silver/platinum/palladium). 2.5-3.5k bank txns/mo. Wants payments platform with API + Reckon integration. Mostly AUD; 1 SG partner. AE call done, KYB + demo next." },
+    { rank: 6, duration: "1m40s", sdr: "Harini", region: "SG", date: "Apr 24", co: "PRCA Global", contact: "Ed Burleigh", platform: "Exotel", outcome: "Substantive", snippet: "Engaged conversation about Finmo." },
+    { rank: 7, duration: "1m33s", sdr: "Harini", region: "SG", date: "Apr 23", co: "Iab Sea+India", contact: "Miranda Dimopoulos", platform: "Exotel", outcome: "Identity question", snippet: "Miranda asked where Harini was calling from before engaging." },
+    { rank: 8, duration: "1m21s", sdr: "Harini", region: "SG", date: "Apr 27", co: "The DFRNT Agency", contact: "Sharlyn Seet", platform: "Exotel", outcome: "Substantive", snippet: "Sharlene engaged for ~80s on the Finmo pitch." },
+    { rank: 9, duration: "1m21s", sdr: "Harini", region: "SG", date: "Apr 29", co: "Olief", contact: "Tinaga Angkasa", platform: "Exotel", outcome: "Rejection", snippet: "Tinaga declined politely." },
+    { rank: 10, duration: "1m20s", sdr: "Harini", region: "SG", date: "Apr 29", co: "MyagenC", contact: "Norah Zhang", platform: "Exotel", outcome: "Substantive", snippet: "Nora engaged in extended dialogue." },
+    { rank: 11, duration: "1m18s", sdr: "Harini", region: "Other", date: "Apr 24", co: "Cyphalet Inc", contact: "Sunday Olanite", platform: "Exotel", outcome: "Follow-up - prior period inbound", snippet: "Follow-up from last week's PSP meeting. Sunday is the Cyphalet contact - $5-10M/mo USD payouts to CN / IN / US." },
+    { rank: 12, duration: "1m17s", sdr: "Harini", region: "SG", date: "Apr 29", co: "NEIV", contact: "Sidharth Bhadani", platform: "Exotel", outcome: "Substantive", snippet: "Siddharth engaged for the pitch." },
+    { rank: 13, duration: "1m16s", sdr: "Harini", region: "SG", date: "Apr 29", co: "Creo Farm", contact: "Kang Shiqiang", platform: "Exotel", outcome: "Interested", snippet: "Kang signed up on website. Engaged in conversation." },
+    { rank: 14, duration: "1m08s", sdr: "Harini", region: "SG", date: "Apr 29", co: "Trampolene", contact: "Tan Francis", platform: "Exotel", outcome: "Substantive", snippet: "Tom Francis engaged for the pitch." },
+    { rank: 15, duration: "1m05s", sdr: "Harini", region: "SG", date: "Apr 27", co: "Singapore Institute of Manufacturing Technology", contact: "David Low", platform: "Exotel", outcome: "Substantive", snippet: "David engaged for ~65s, asked Harini to be quick." },
   ];
 
-  // Outbound meetings - first concrete result of the multi-persona AE-led outreach
-  const outboundMeetings = [
-    {
-      name: "Avish Joseph",
-      co: "STRATAGILE / CrossXpay",
-      sdr: "-",
-      ae: "Nouvelle",
-      type: "3 meetings: Apr 20 intro, Apr 28 pricing sync, Apr 29 M H Express NZ proposal",
-      date: "Apr 20-29",
-      website: "",
-      icp: true,
-      note: "First conversion from AE-led multi-persona outreach. Nouvelle drove the engagement end-to-end - partnership angle with CrossXpay plus a virtual-account proposal for M H Express NZ. Still in active conversation - momentum building.",
-    },
-  ];
+  // Outbound meetings - 0 booked from outbound campaigns this week
+  // (STRATAGILE / CrossXpay was inbound-sourced and lives in the Inbound tab)
+  const outboundMeetings: { name: string; co: string; sdr: string; ae: string; type: string; date: string; website: string; icp: boolean; note: string }[] = [];
 
   // Classification mix from 131 transcribed answered calls (Apr 23-29)
   const classifications = [
@@ -314,17 +300,20 @@ function OutboundTab() {
         <MetricCard label="Emails Sent" value="513" sub="398 prospects, 58% open, 1% reply" color="blue" />
         <MetricCard label="LinkedIn Actions" value="515" sub="247 visits, 190 requests, 78 messages" color="purple" />
         <MetricCard label="Total Calls" value="363" sub="Harini: 218, Sukriti: 143" color="green" />
-        <MetricCard label="Meetings (outbound)" value="1" sub="STRATAGILE / CrossXpay (Nouvelle AE)" color="amber" />
+        <MetricCard label="Meetings (outbound)" value="0" sub="No outbound-sourced meetings this week" color="amber" />
       </div>
 
       {/* ICP banner */}
       <Callout type="info">
-        <strong>ICP this period:</strong> marketing agencies in SG / AU / PH / NZ (SMEs). 1 outbound meeting booked from the new AE-led campaigns (STRATAGILE / CrossXpay, owned by Nouvelle). 7 inbound meetings dominated the week - see the Inbound tab.
+        <strong>ICP this period:</strong> marketing agencies in SG / AU / PH / Other (SMEs). <strong>0 outbound meetings booked this week.</strong> The Lead Gen 3.0 campaigns went live Apr 26 and are still in their early days - measure conversion in the next 2-3 weeks. All 6 meetings this week came from inbound - see the Inbound tab.
       </Callout>
 
       {/* Meetings from Outbound */}
-      <Section title="Meetings Booked from Outbound" subtitle="1 meeting (3 sessions) from the new AE-led multi-persona campaigns. Click the row for context.">
-        <div className="overflow-x-auto">
+      <Section title="Meetings Booked from Outbound" subtitle="0 meetings booked from outbound campaigns this week.">
+        <Callout type="info">
+          <strong>No outbound-sourced meetings this week.</strong> The Lead Gen 3.0 campaigns launched Apr 26 (3 days into this period). Sequence is built for 35-42 days, so first AE / Founder-driven conversions are expected in the May 5-15 window. Watch acceptance rates and reply quality in the New Outbound Initiative section below.
+        </Callout>
+        {outboundMeetings.length > 0 && <div className="overflow-x-auto mt-4">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b-2 border-gray-200 bg-gray-50">
@@ -368,7 +357,7 @@ function OutboundTab() {
               ))}
             </tbody>
           </table>
-        </div>
+        </div>}
       </Section>
 
       {/* Outreach Funnel */}
@@ -508,36 +497,41 @@ function OutboundTab() {
         </Callout>
       </Section>
 
-      {/* Reply Analysis */}
-      <Section title="Reply Analysis" subtitle="~4 prospect replies estimated this period (1% of 398 emailed). Detailed sentiment + content pending HubSpot / SmartReach inbox review.">
+      {/* Feedback from Outbound Calls */}
+      <Section title="Feedback from Outbound Calls" subtitle="7 verbatim prospect responses captured from outbound calls this period. Pattern: 4 of 7 are 'no time / not now', 1 is 'no pain', 1 is a pitch-back, 1 is off-topic. Zero positive signals.">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-          <div className="bg-emerald-50 rounded-lg p-3 border border-emerald-100 text-center">
-            <p className="text-2xl font-bold text-emerald-800">~1</p>
-            <p className="text-xs font-medium text-emerald-600">Email replies (1% of 398)</p>
+          <div className="bg-amber-50 rounded-lg p-3 border border-amber-100 text-center">
+            <p className="text-2xl font-bold text-amber-800">4</p>
+            <p className="text-xs font-medium text-amber-600">No time / not now</p>
           </div>
           <div className="bg-red-50 rounded-lg p-3 border border-red-100 text-center">
-            <p className="text-2xl font-bold text-red-800">0</p>
-            <p className="text-xs font-medium text-red-600">LinkedIn replies (0% rate)</p>
+            <p className="text-2xl font-bold text-red-800">2</p>
+            <p className="text-xs font-medium text-red-600">No pain / not relevant</p>
           </div>
           <div className="bg-gray-50 rounded-lg p-3 border border-gray-200 text-center">
-            <p className="text-2xl font-bold text-gray-700">~4</p>
-            <p className="text-xs font-medium text-gray-500">Total est. - sentiment TBD</p>
+            <p className="text-2xl font-bold text-gray-700">1</p>
+            <p className="text-xs font-medium text-gray-500">Pitch-back / off-topic</p>
           </div>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b-2 border-gray-200 bg-gray-50">
-                <th className="text-left py-2 px-3 font-semibold text-gray-600">Company</th>
-                <th className="text-left py-2 px-3 font-semibold text-gray-600">Reply</th>
-                <th className="text-left py-2 px-3 font-semibold text-gray-600">Type</th>
-                <th className="text-left py-2 px-3 font-semibold text-gray-600">Next step</th>
+                <th className="text-left py-2 px-3 font-semibold text-gray-600">HubSpot contact</th>
+                <th className="text-left py-2 px-3 font-semibold text-gray-600">Quote</th>
+                <th className="text-left py-2 px-3 font-semibold text-gray-600">Read</th>
               </tr>
             </thead>
             <tbody>
-              {replies.length === 0 ? (
-                <tr><td colSpan={4} className="py-4 px-3 text-center text-xs text-gray-500 italic">Reply detail not yet pulled for this period. Action: AE / SDR to manually review SmartReach inbox + cross-reference HubSpot notes for in-period replies.</td></tr>
-              ) : replies.map((r) => (
+              {[
+                { hsId: "457029405379", quote: "My vision goes out to infinity. Cash will hold forever. Doesn\'t require guts.", read: "Off-topic / philosophical decline", variant: "default" as const },
+                { hsId: "443182799570", quote: "Have two people in finance, uses Xero for accounting. Everything is smooth.", read: "No pain - happy with current stack", variant: "danger" as const },
+                { hsId: "94576446549", quote: "Thanks for reaching out Harini. This is not relevant to me but I can find you new clients on LinkedIn. Please let me know if you would be interested in using our highly recommended LinkedIn Marketing services.", read: "Pitch-back - prospect selling to us", variant: "default" as const },
+                { hsId: "457015583446", quote: "Unfortunately, I really don\'t have the time to prepare. It\'s a really small team.", read: "No time / capacity", variant: "warning" as const },
+                { hsId: "457029392060", quote: "Thank you so much for the invite, but I\'m not so interested.", read: "Polite not-interested", variant: "warning" as const },
+                { hsId: "457015414520", quote: "At this moment, we are not looking into that. I would not be interested to explore that at the moment.", read: "Not now", variant: "warning" as const },
+                { hsId: "457027844797", quote: "I don\'t think I have the time. Really, thank you for the offer.", read: "No time / capacity", variant: "warning" as const },
+              ].map((r) => (
                 <tr key={r.hsId} className="border-b border-gray-50">
                   <td className="py-2 px-3 font-medium">
                     <a
@@ -546,18 +540,19 @@ function OutboundTab() {
                       rel="noopener noreferrer"
                       className="text-blue-700 hover:underline"
                     >
-                      {r.company} <span className="text-[10px] text-blue-400">&#8599;</span>
+                      {r.hsId} <span className="text-[10px] text-blue-400">&#8599;</span>
                     </a>
-                    <span className="text-xs text-gray-500"> - {r.contact}</span>
                   </td>
-                  <td className="py-2 px-3 text-sm text-gray-700 italic">"{r.reply}"</td>
-                  <td className="py-2 px-3"><Badge text={r.type} variant={r.variant} /></td>
-                  <td className="py-2 px-3 text-xs text-gray-500">{r.note}</td>
+                  <td className="py-2 px-3 text-sm text-gray-700 italic">"{r.quote}"</td>
+                  <td className="py-2 px-3"><Badge text={r.read} variant={r.variant} /></td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        <Callout type="warning">
+          <strong>"No time / not now" is the dominant signal (4 of 7).</strong> Reads like opener-fatigue or wrong-context interruption rather than wrong-fit. Worth testing a permission-based opener ("got 30 seconds?") or async outreach (LinkedIn / WhatsApp) for these cohorts.
+        </Callout>
       </Section>
 
       {/* Call Performance */}
@@ -1119,7 +1114,7 @@ function OutboundTab() {
             </div>
           </div>
           <div className="mt-3 p-2 bg-emerald-100 rounded text-center">
-            <p className="text-xs font-bold text-emerald-900">First conversion already landed: STRATAGILE / CrossXpay - 3 meetings with Nouvelle (Apr 20-29) - see Inbound tab</p>
+            <p className="text-xs font-bold text-emerald-900">Lead Gen 3.0 launched Apr 26 - first AE / Founder-driven conversions expected in the May 5-15 window. Track acceptance + reply quality below.</p>
           </div>
         </div>
 
@@ -1319,12 +1314,9 @@ function OutboundTab() {
         </div>
 
         {/* Patterns + open follow-ups */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div className="mb-4">
           <Callout type="success">
             <strong>60% in Finmo SME sweet spot (100-999 employees).</strong> 17 in 500-999 band. The 1k+ tail (17 companies) is acknowledged stretch-ICP, calibrated with regional / entity-level framing in their content.
-          </Callout>
-          <Callout type="warning">
-            <strong>Open follow-up.</strong> All 99 prospects landed with the API key default owner (Gibson Saw) on push. Filter each campaign by AE / SDR and bulk-assign correct owner per campaign in SmartReach UI.
           </Callout>
         </div>
 
@@ -1427,7 +1419,7 @@ function InboundTab() {
       ae: "Nouvelle",
       meetings: 3,
       latest: "Apr 29",
-      note: "Apr 20 intro -> Apr 28 pricing sync -> Apr 29 M H Express NZ proposal. AE-led outbound conversion - first concrete result from the multi-persona campaign.",
+      note: "Apr 20 intro -> Apr 28 pricing sync -> Apr 29 M H Express NZ proposal. Inbound-sourced; Nouvelle owns the engagement end-to-end.",
     },
     {
       co: "9 PAY PTY LTD",
@@ -1437,14 +1429,6 @@ function InboundTab() {
       latest: "Apr 28",
       note: "Inbound 'Contact Us' form. Two meetings scheduled across both SDRs.",
     },
-    {
-      co: "PICKNIC / Tailored Experiences",
-      contact: "-",
-      ae: "Unassigned",
-      meetings: 1,
-      latest: "Apr 28",
-      note: "Title: PICKNIC <> FINMO. Need to assign AE.",
-    },
   ];
 
   const aeMeetingSummary = [
@@ -1453,7 +1437,6 @@ function InboundTab() {
     { ae: "Nouvelle", type: "STRATAGILE / CrossXpay", count: 3 },
     { ae: "Sukriti / Harini", type: "9 PAY PTY LTD", count: 2 },
     { ae: "BD team", type: "ELRC Trading", count: 1 },
-    { ae: "Unassigned", type: "PICKNIC", count: 1 },
   ];
 
   const callDisposition = [
@@ -1469,7 +1452,6 @@ function InboundTab() {
     { co: "STRATAGILE / CrossXpay", why: "Avish Joseph, AE Nouvelle. 3 meetings already booked - virtual-account proposal for M H Express NZ.", status: "Hot", hsId: "" },
     { co: "Cyphalet (carry-over)", why: "Nigerian PSP, $5-10M/mo. Last week's meeting + this week's 1m18s follow-up call.", status: "Warm", hsId: "" },
     { co: "9 PAY PTY LTD", why: "Sermpong Wongwiengchan. 2 meetings booked across Sukriti + Harini.", status: "Warm", hsId: "" },
-    { co: "PICKNIC / Tailored Experiences", why: "Apr 28 meeting booked - AE not yet assigned. Action this week.", status: "Warm", hsId: "" },
   ];
 
   return (
@@ -1479,7 +1461,7 @@ function InboundTab() {
         <MetricCard label="Total Signups" value="68" sub="Apr 23-29 zap runs" color="blue" />
         <MetricCard label="Legitimate" value="50" sub="74% of total" trend={{ val: -15, label: "vs prior" }} color="green" />
         <MetricCard label="Junk Rate" value="25%" sub="17 junk - down from 40% prior" trend={{ val: -15, label: "vs prior" }} color="red" />
-        <MetricCard label="Meetings Booked" value="7" sub="2 FI + 2 non-FI + 3 from auto-pull (AE / SDR)" color="purple" />
+        <MetricCard label="Meetings Booked" value="6" sub="2 FI + 2 non-FI + 2 from auto-pull (STRATAGILE + 9 PAY)" color="purple" />
         <MetricCard label="Contacts Called" value="88%" sub="44/50 - 65 calls, 1.5 per lead" color="cyan" />
       </div>
 
@@ -1642,7 +1624,7 @@ function InboundTab() {
       </Section>
 
       {/* Meetings */}
-      <Section title="Meetings Booked from Inbound" subtitle="7 meetings: 2 FI / crypto-adjacent (AU) + 2 non-FI (AU + MY) + 3 from auto-pull (signups already engaging with AEs / SDRs).">
+      <Section title="Meetings Booked from Inbound" subtitle="6 meetings: 2 FI / crypto-adjacent (AU) + 2 non-FI (AU + MY) + 2 from auto-pull (STRATAGILE 3 sessions, 9 PAY 2 sessions).">
         <div className="overflow-x-auto mb-6">
           <h4 className="font-semibold text-gray-800 text-sm mb-3">Financial Institutions / Crypto-adjacent (2)</h4>
           <table className="w-full text-sm">
@@ -1722,7 +1704,7 @@ function InboundTab() {
         </div>
 
         <div className="overflow-x-auto mb-6">
-          <h4 className="font-semibold text-gray-800 text-sm mb-3">Auto-pulled from HubSpot (3)</h4>
+          <h4 className="font-semibold text-gray-800 text-sm mb-3">Auto-pulled from HubSpot (2)</h4>
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b-2 border-gray-200 bg-gray-50">
@@ -1750,7 +1732,7 @@ function InboundTab() {
         </div>
 
         <Callout type="success">
-          <strong>Strong inbound week - 7 meetings vs 5 prior period.</strong> AU is the dominant geography (4 of 7 meetings). Both FI prospects (ELRC, Uptrade) and AGC have committed AE follow-ups. STRATAGILE / CrossXpay (3 meetings with Nouvelle) is the first concrete result of the multi-persona AE-led outreach.
+          <strong>Strong inbound week - 6 meetings vs 5 prior period.</strong> AU is the dominant geography (4 of 6 meetings). Both FI prospects (ELRC, Uptrade) and AGC have committed AE follow-ups. STRATAGILE / CrossXpay drove 3 meetings with Nouvelle inside 9 days.
         </Callout>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mt-4">
@@ -1799,14 +1781,14 @@ function InboundTab() {
           <div className="flex items-start justify-between mb-3">
             <div>
               <div className="flex items-center gap-2">
-                <p className="text-lg font-bold text-violet-900">Multi-Persona Outreach - First Conversion</p>
-                <Badge text="MILESTONE" variant="purple" />
+                <p className="text-lg font-bold text-violet-900">STRATAGILE / CrossXpay (inbound)</p>
+                <Badge text="HIGH ENGAGEMENT" variant="purple" />
               </div>
-              <p className="text-sm text-violet-700 mt-0.5">STRATAGILE / CrossXpay - 3 meetings with Nouvelle in this period</p>
+              <p className="text-sm text-violet-700 mt-0.5">3 meetings with Nouvelle inside 9 days</p>
             </div>
           </div>
           <div className="bg-white rounded-lg p-3 border border-violet-200">
-            <p className="text-xs text-gray-700">Apr 20 intro -&gt; Apr 28 pricing sync -&gt; Apr 29 M H Express NZ proposal. Avish Joseph engaged across 9 days. <strong>First concrete revenue conversion from the AE-led multi-persona campaigns that launched Apr 26.</strong> Nouvelle owns the entire engagement.</p>
+            <p className="text-xs text-gray-700">Apr 20 intro -&gt; Apr 28 pricing sync -&gt; Apr 29 M H Express NZ proposal. Avish Joseph engaged across 9 days. Inbound-sourced lead, Nouvelle owns the engagement end-to-end. Fastest-moving inbound conversation of the week.</p>
           </div>
         </div>
       </Section>
@@ -1841,14 +1823,14 @@ function InboundTab() {
       <Section title="Key Observations">
         <div className="space-y-3">
           {[
-            { num: "1", text: "7 inbound meetings booked (vs 5 prior week, +40%). 4 user-detailed (AGC, MDHR, ELRC, Uptrade) + 3 from auto-pull (STRATAGILE 3 sessions, 9 PAY 2 sessions, PICKNIC 1)." },
+            { num: "1", text: "6 inbound meetings booked (vs 5 prior week, +20%). 4 user-detailed (AGC, MDHR, ELRC, Uptrade) + 2 from auto-pull (STRATAGILE 3 sessions, 9 PAY 2 sessions)." },
             { num: "2", text: "AU AUD-rails pattern repeats - week 3 in a row. ELRC + Uptrade + AGC = $20M+ AUD/mo combined. Productize vs partner-route decision is overdue." },
             { num: "3", text: "Junk rate 25% (down from 40% prior). 16 of 17 junk records are @finmo.net internal - same structural source." },
-            { num: "4", text: "50 unique legit signups - down from 59 last week, but quality up: 88% called, 7 meetings (vs 88% / 5 last week, on a smaller base)." },
+            { num: "4", text: "50 unique legit signups - down from 59 last week, but quality up: 88% called, 6 meetings (vs 88% / 5 last week, on a smaller base)." },
             { num: "5", text: "Malaysia still dominates signup volume (70%) but converts poorly - 1 meeting from 35 MY signups (MDHR Legacy). MDHR was the standout via 7m26s call." },
             { num: "6", text: "Referral source = Not set 100% again. Two consecutive weeks - this is a confirmed form regression. Action: fix signup form referral_source field this week." },
-            { num: "7", text: "AE coverage spread - Justin owns 2 (AGC + Uptrade), Adlin 1 (MDHR), Nouvelle 3 (CrossXpay), BD team 1 (ELRC), Sukriti / Harini 1 split (9 PAY), 1 unassigned (PICKNIC). Assign PICKNIC AE this week." },
-            { num: "8", text: "Nouvelle\'s STRATAGILE / CrossXpay engagement - first concrete result of the multi-persona AE-led campaigns launched Apr 26. 3 meetings inside 9 days. Watch this conversion path." },
+            { num: "7", text: "AE coverage spread - Justin owns 2 (AGC + Uptrade), Adlin 1 (MDHR), Nouvelle 3 (CrossXpay), BD team 1 (ELRC), Sukriti / Harini 1 split (9 PAY)." },
+            { num: "8", text: "STRATAGILE / CrossXpay (inbound) - 3 meetings with Nouvelle inside 9 days. Fastest-moving inbound conversation of the week. Watch this conversion path." },
           ].map((o) => (
             <div key={o.num} className="flex items-start gap-3">
               <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs font-bold flex-shrink-0">{o.num}</span>
