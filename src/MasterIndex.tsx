@@ -64,6 +64,26 @@ const categories: Category[] = [
     ],
   },
   {
+    name: "Merchant Adoption",
+    icon: "MA",
+    dashboards: [
+      {
+        name: "Closed Won/Activation",
+        description: "42 deals · $727K booked vs $24K realized. Why activated merchants aren't transacting — KYB, no-adoption, partner channel, forecast vs actual.",
+        period: "Live snapshot",
+        status: "live",
+        url: "/merchant-adoption/closed-won",
+      },
+      {
+        name: "Live",
+        description: "Same lifecycle analysis applied to the Live stage of the Sales pipeline (67 deals). Coming soon.",
+        period: "TBD",
+        status: "coming-soon",
+        url: "/merchant-adoption/live",
+      },
+    ],
+  },
+  {
     name: "Sales & Pipeline",
     icon: "SP",
     dashboards: [
