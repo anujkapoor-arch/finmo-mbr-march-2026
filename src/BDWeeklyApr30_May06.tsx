@@ -529,18 +529,18 @@ function OutboundTab() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b-2 border-gray-200 bg-gray-50">
-                <th className="text-left py-2 px-3 font-semibold text-gray-600">HubSpot call</th>
+                <th className="text-left py-2 px-3 font-semibold text-gray-600">Company</th>
                 <th className="text-left py-2 px-3 font-semibold text-gray-600">Notes from call</th>
                 <th className="text-left py-2 px-3 font-semibold text-gray-600">Read</th>
               </tr>
             </thead>
             <tbody>
               {[
-                { hsId: "474171829961", quote: "Already have a system in place for payments but they are looking for a functional platform that can manage all of their invoices. For accounting they use Oracle. Need to send tailored email including all the ways we can help.", read: "Send tailored email - Aiko / Growsari", variant: "success" as const },
-                { hsId: "457015494363", quote: "He was busy but mentioned they have an in-house finance team plus a team in Singapore and Europe. Hesitant on the cross-border payments platform. Asked for an email he can forward to the concerned team.", read: "Send tailored email - in-house team", variant: "warning" as const },
-                { hsId: "456973460217", quote: "Remembered the LinkedIn outreach, very pleasant. Around 10-12 people in finance, uses QuickBooks for accounting, everything else manual but happy with current setup as they are going through changes.", read: "No pain - happy with QuickBooks stack", variant: "default" as const },
-                { hsId: "457027968706", quote: "They have a very small-scale setup, everything managed mostly in Singapore itself, so they do not need any payment solutions. Using traditional banks for now.", read: "Small setup - no fit", variant: "danger" as const },
-                { hsId: "443182799605", quote: "Said they are not interested in any financial services and hung up.", read: "Not interested - hung up", variant: "danger" as const },
+                { hsId: "474171829961", co: "Growsari (Aiko Sagusay)", quote: "Already have a system in place for payments but they are looking for a functional platform that can manage all of their invoices. For accounting they use Oracle. Need to send tailored email including all the ways we can help.", read: "Send tailored email", variant: "success" as const },
+                { hsId: "457015494363", co: "DangleAds (Pulkit Narayan)", quote: "He was busy but mentioned they have an in-house finance team plus a team in Singapore and Europe. Hesitant on the cross-border payments platform. Asked for an email he can forward to the concerned team.", read: "Send tailored email", variant: "warning" as const },
+                { hsId: "456973460217", co: "IRD (Faseeh Uddin)", quote: "Remembered the LinkedIn outreach, very pleasant. Around 10-12 people in finance, uses QuickBooks for accounting, everything else manual but happy with current setup as they are going through changes.", read: "No pain - happy with QuickBooks stack", variant: "default" as const },
+                { hsId: "457027968706", co: "Tangible (Charlie Scott)", quote: "They have a very small-scale setup, everything managed mostly in Singapore itself, so they do not need any payment solutions. Using traditional banks for now.", read: "Small setup - no fit", variant: "danger" as const },
+                { hsId: "443182799605", co: "Middleeastretail (Timo Josten)", quote: "Said they are not interested in any financial services and hung up.", read: "Not interested - hung up", variant: "danger" as const },
               ].map((r) => (
                 <tr key={r.hsId} className="border-b border-gray-50">
                   <td className="py-2 px-3 font-medium">
@@ -550,7 +550,7 @@ function OutboundTab() {
                       rel="noopener noreferrer"
                       className="text-blue-700 hover:underline"
                     >
-                      {r.hsId} <span className="text-[10px] text-blue-400">&#8599;</span>
+                      {r.co} <span className="text-[10px] text-blue-400">&#8599;</span>
                     </a>
                   </td>
                   <td className="py-2 px-3 text-sm text-gray-700 italic">"{r.quote}"</td>
@@ -1371,7 +1371,7 @@ function InboundTab() {
   const dealActivity = [
     { bucket: "Contacts with deals", count: 35, note: "57% of legitimate signups have at least one HubSpot deal associated - up from 48% prior" },
     { bucket: "Contacts without deals", count: 26, note: "Personal-email Malaysia signups dominate this bucket - similar pattern as prior weeks" },
-    { bucket: "Contacts with meetings", count: 6, note: "1982 VC + Busker Beat (this period), Your View Roofong (user-detailed AE call), plus 3 from auto-pull (UTSIT, ELRC follow-up, afini)" },
+    { bucket: "Contacts with meetings", count: 5, note: "1982 VC + Busker Beat (this period), Your View Roofong (user-detailed AE call), plus 2 from auto-pull (UTSIT, ELRC follow-up)" },
   ];
 
   // 3 inbound meetings + 3 auto-pull engagements this period
@@ -1431,21 +1431,12 @@ function InboundTab() {
       latest: "Apr 27",
       note: "Two prior meetings logged - 'Contact Us' meeting and intro call. Cross-period engagement continuation - watch for KYB progression.",
     },
-    {
-      co: "afini",
-      contact: "Michael Kolman",
-      ae: "Tom Kang",
-      meetings: 1,
-      latest: "Apr 29",
-      note: "Re-engagement meeting (prior session was Mar 10). Tom Kang owns the engagement.",
-    },
   ];
 
   const aeMeetingSummary = [
     { ae: "Sukriti", type: "1982 VC + Busker Beat", count: 2 },
     { ae: "Gibson", type: "1982 VC dashboard walk", count: 1 },
     { ae: "Nouvelle", type: "Your View Roofong + UTSIT", count: 2 },
-    { ae: "Tom Kang", type: "afini", count: 1 },
     { ae: "Sukriti / Harini", type: "ELRC carry-over", count: 2 },
   ];
 
@@ -1634,7 +1625,8 @@ function InboundTab() {
       </Section>
 
       {/* Meetings */}
-      <Section title="Meetings Booked from Inbound" subtitle="3 fresh inbound meetings + 3 from auto-pull (UTSIT, ELRC carry-over, afini).">
+      <Section title="Meetings Booked from Inbound" subtitle="3 fresh inbound meetings + 2 from auto-pull (UTSIT, ELRC carry-over).">
+
         <div className="overflow-x-auto mb-6">
           <h4 className="font-semibold text-gray-800 text-sm mb-3">Financial Institutions / VC (1)</h4>
           <table className="w-full text-sm">
@@ -1715,7 +1707,7 @@ function InboundTab() {
         </div>
 
         <div className="overflow-x-auto mb-6">
-          <h4 className="font-semibold text-gray-800 text-sm mb-3">Auto-pulled from HubSpot (3)</h4>
+          <h4 className="font-semibold text-gray-800 text-sm mb-3">Auto-pulled from HubSpot (2)</h4>
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b-2 border-gray-200 bg-gray-50">
