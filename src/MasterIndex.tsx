@@ -41,6 +41,13 @@ const categories: Category[] = [
     icon: "BD",
     dashboards: [
       {
+        name: "April 30 - May 06, 2026",
+        description: "Lower volume, higher quality - 258 calls, 103 transcribed. Aiko / Growsari outbound mockup booked. Your View Roofong (AU) inbound 12m02s call. AE LinkedIn acceptance: Gibson 24%, Elross 22%.",
+        period: "Apr 30 - May 06, 2026",
+        status: "live",
+        url: "/bd-weekly-apr-30-may-06",
+      },
+      {
         name: "April 23-29, 2026",
         description: "Lead Gen 3.0 launched (101 prospects, 6 campaigns - 4 AE + 2 SDR). 7 inbound meetings, 363 calls, 131 transcribed. Multi-persona outreach now live.",
         period: "Apr 23-29, 2026",

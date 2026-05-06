@@ -4,6 +4,7 @@ import MBRDashboard from "./Dashboard";
 import BDWeeklyReport from "./BDWeeklyReport";
 import BDWeeklyApr16_22 from "./BDWeeklyApr16_22";
 import BDWeeklyApr23_29 from "./BDWeeklyApr23_29";
+import BDWeeklyApr30_May06 from "./BDWeeklyApr30_May06";
 import MerchantAdoptionClosedWon from "./MerchantAdoptionClosedWon";
 import MerchantAdoptionLive from "./MerchantAdoptionLive";
 import AuthGuard from "./components/AuthGuard";
@@ -51,6 +52,14 @@ function App() {
           element={
             <AuthGuard>
               <BDWeeklyApr23_29 />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/bd-weekly-apr-30-may-06"
+          element={
+            <AuthGuard>
+              <BDWeeklyApr30_May06 />
             </AuthGuard>
           }
         />
