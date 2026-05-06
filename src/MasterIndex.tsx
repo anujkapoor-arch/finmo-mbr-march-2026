@@ -76,9 +76,9 @@ const categories: Category[] = [
       },
       {
         name: "Live",
-        description: "Same lifecycle analysis applied to the Live stage of the Sales pipeline (67 deals). Coming soon.",
-        period: "TBD",
-        status: "coming-soon",
+        description: "Same lifecycle analysis applied to the Live stage of the Sales pipeline (67 deals). KYB / adoption / forecast vs actual / partner channel / AE breakdown.",
+        period: "Live snapshot",
+        status: "live",
         url: "/merchant-adoption/live",
       },
     ],
