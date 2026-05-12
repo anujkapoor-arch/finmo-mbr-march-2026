@@ -88,6 +88,13 @@ const categories: Category[] = [
         status: "live",
         url: "/merchant-adoption/live",
       },
+      {
+        name: "Pipeline Health & Adoption (Airtable)",
+        description: "Unified view across CWA + Live cohorts, backed by Airtable for append-only snapshot history. Adds Recent Changes (week-over-week diffs) and Data Consistency tabs.",
+        period: "Snapshot-based · Airtable",
+        status: "live",
+        url: "/pipeline-health",
+      },
     ],
   },
   {

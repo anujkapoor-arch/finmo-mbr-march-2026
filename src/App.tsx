@@ -7,6 +7,7 @@ import BDWeeklyApr23_29 from "./BDWeeklyApr23_29";
 import BDWeeklyApr30_May06 from "./BDWeeklyApr30_May06";
 import MerchantAdoptionClosedWon from "./MerchantAdoptionClosedWon";
 import MerchantAdoptionLive from "./MerchantAdoptionLive";
+import PipelineHealth from "./PipelineHealth";
 import AuthGuard from "./components/AuthGuard";
 import Login from "./pages/Login";
 
@@ -76,6 +77,14 @@ function App() {
           element={
             <AuthGuard>
               <MerchantAdoptionLive />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/pipeline-health"
+          element={
+            <AuthGuard>
+              <PipelineHealth />
             </AuthGuard>
           }
         />
