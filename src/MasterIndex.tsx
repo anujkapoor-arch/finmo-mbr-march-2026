@@ -75,37 +75,11 @@ const categories: Category[] = [
     icon: "MA",
     dashboards: [
       {
-        name: "Closed Won/Activation",
-        description: "42 deals · $727K booked vs $24K realized. Why activated merchants aren't transacting — KYB, no-adoption, partner channel, forecast vs actual.",
+        name: "Pipeline Health & Adoption",
+        description: "Unified view across CWA + Live cohorts with append-only snapshot history. Includes Recent Changes (week-over-week diffs) and Data Consistency tabs.",
         period: "Live snapshot",
-        status: "live",
-        url: "/merchant-adoption/closed-won",
-      },
-      {
-        name: "Live",
-        description: "Same lifecycle analysis applied to the Live stage of the Sales pipeline (67 deals). KYB / adoption / forecast vs actual / partner channel / AE breakdown.",
-        period: "Live snapshot",
-        status: "live",
-        url: "/merchant-adoption/live",
-      },
-      {
-        name: "Pipeline Health & Adoption (Airtable)",
-        description: "Unified view across CWA + Live cohorts, backed by Airtable for append-only snapshot history. Adds Recent Changes (week-over-week diffs) and Data Consistency tabs.",
-        period: "Snapshot-based · Airtable",
         status: "live",
         url: "/pipeline-health",
-      },
-    ],
-  },
-  {
-    name: "Sales & Pipeline",
-    icon: "SP",
-    dashboards: [
-      {
-        name: "Real-Time Pipeline Tracker",
-        description: "Live deal stages, AE performance, revenue forecasting",
-        period: "Always-on",
-        status: "coming-soon",
       },
     ],
   },
