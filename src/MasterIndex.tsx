@@ -1,4 +1,4 @@
-// Master Index Page — Finmo Pulse
+// Master Index Page - Finmo Pulse
 // Template: categories with sub-dashboards listed as cards
 import { Link } from "react-router-dom"
 
@@ -23,16 +23,17 @@ const categories: Category[] = [
     dashboards: [
       {
         name: "March 2026",
-        description: "Outbound Sales, Inbound Leads, Solutions — full pipeline review with Metabase revenue data",
+        description: "Outbound Sales, Inbound Leads, Solutions - full pipeline review with Metabase revenue data",
         period: "March 2026",
         status: "live",
         url: "/mbr-march-2026",
       },
       {
         name: "April 2026",
-        description: "Coming soon",
+        description: "Outbound (854 prospects, 1,278 calls, 8 replies), Inbound (185 legit signups, +203% vs Mar), Solutions (16 new SP cards, $1.19M April revenue, 2 net-new merchants activated)",
         period: "April 2026",
-        status: "coming-soon",
+        status: "live",
+        url: "/mbr-april-2026",
       },
     ],
   },
@@ -109,7 +110,7 @@ const categories: Category[] = [
     dashboards: [
       {
         name: "Ops Task Tracker",
-        description: "PM activations, GCA, Pricing — team TAT and workload",
+        description: "PM activations, GCA, Pricing - team TAT and workload",
         period: "Always-on",
         status: "coming-soon",
       },

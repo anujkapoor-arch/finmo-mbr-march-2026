@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MasterIndex from "./MasterIndex";
 import MBRDashboard from "./Dashboard";
+import MBRAprilDashboard from "./DashboardApril";
 import BDWeeklyReport from "./BDWeeklyReport";
 import BDWeeklyApr16_22 from "./BDWeeklyApr16_22";
 import BDWeeklyApr23_29 from "./BDWeeklyApr23_29";
@@ -29,6 +30,14 @@ function App() {
           element={
             <AuthGuard>
               <MBRDashboard />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/mbr-april-2026"
+          element={
+            <AuthGuard>
+              <MBRAprilDashboard />
             </AuthGuard>
           }
         />

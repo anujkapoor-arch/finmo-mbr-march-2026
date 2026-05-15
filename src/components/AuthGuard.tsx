@@ -13,13 +13,25 @@ const AuthContext = createContext<AuthContextType>({ logout: async () => {} });
 export const useAuth = () => useContext(AuthContext);
 
 export default function AuthGuard({ children }: { children: ReactNode }) {
-  const [status, setStatus] = useState<"loading" | "ok" | "denied">("loading");
+  const [status, setStatus] = useState<"loading" | "ok" | "denied">(
+    import.meta.env.DEV ? "ok" : "loading"
+  );
 
   const logout = useCallback(async () => {
     localStorage.removeItem(LOGIN_TIME_KEY);
     await supabase.auth.signOut();
     window.location.href = "/login";
   }, []);
+
+  // Dev-server bypass: never gate the app behind auth when running locally.
+  // Production builds (Lovable deploy) still enforce auth.
+  if (import.meta.env.DEV) {
+    return (
+      <AuthContext.Provider value={{ logout }}>
+        {children}
+      </AuthContext.Provider>
+    );
+  }
 
   useEffect(() => {
     const check = async () => {
