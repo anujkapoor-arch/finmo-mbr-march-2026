@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Dashboard refresh credentials (secrets — keep out of git)
+refresh/.env
+refresh/__pycache__/
+__pycache__/
